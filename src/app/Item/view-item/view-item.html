@@ -1,0 +1,75 @@
+<!-- view-item.component.html -->
+<div class="container mt-4">
+  <div class="card p-4">
+    <div class="mt-4">
+      <form [formGroup]="itemForm" (ngSubmit)="updateItem()">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Barcode</label>
+            <input pInputText class="form-control" formControlName="barcode" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <input pInputText class="form-control" formControlName="name" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Date of Purchase</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="dateOfPurchase"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Quantity</label>
+            <input
+              type="number"
+              pInputText
+              class="form-control"
+              formControlName="quantity"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Buy Price</label>
+            <input
+              type="number"
+              pInputText
+              class="form-control"
+              formControlName="buyPrice"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Sell Price</label>
+            <input
+              type="number"
+              pInputText
+              class="form-control"
+              formControlName="sellPrice"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Color</label>
+            <input pInputText class="form-control" formControlName="color" />
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button
+            pButton
+            type="submit"
+            label="Update Item"
+            icon="pi pi-save"
+            class="p-button-success"
+            [disabled]="itemForm.invalid"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
