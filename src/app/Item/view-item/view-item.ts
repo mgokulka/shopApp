@@ -45,6 +45,7 @@ export class ViewItem {
       color: [''],
     });
     this.itemService.items$.subscribe((data) => (this.itemMasterData = data));
+    this.fetchItem();
   }
 
   fetchItem() {
