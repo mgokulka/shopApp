@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -24,7 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './view-item.html',
   styleUrl: './view-item.scss',
 })
-export class ViewItem {
+export class ViewItem implements OnChanges {
   searchBarcode: string = '';
   itemForm!: FormGroup;
   @Input() barcodeValue: string = '';
@@ -34,6 +34,13 @@ export class ViewItem {
     private itemService: CreateItemService
   ) {}
   itemMasterData: any;
+  ngOnChanges() {
+    if (this.barcodeValue) {
+      this.searchBarcode = this.barcodeValue;
+      this.fetchItem();
+    }
+  }
+
   ngOnInit(): void {
     this.itemForm = this.fb.group({
       barcode: [{ value: '', disabled: true }], // barcode is read-only
@@ -45,6 +52,10 @@ export class ViewItem {
       color: [''],
     });
     this.itemService.items$.subscribe((data) => (this.itemMasterData = data));
+    debugger;
+    if (this.barcodeValue === '') {
+      return;
+    }
     this.fetchItem();
   }
 

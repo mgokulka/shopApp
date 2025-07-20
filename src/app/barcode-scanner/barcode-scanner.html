@@ -2,8 +2,8 @@
   <h4>scan barcode:</h4>
   {{ scannedCode || "No code scanned yet" }}
 </div>
-@if(showCreateItemComponent){
+@if(showCreateItemComponent) {
 <app-create-item [barcodeValue]="scannedCode"></app-create-item>
-} @else{
+} @else if(scannedCode !==''){
 <app-view-item [barcodeValue]="scannedCode"></app-view-item>
 }
