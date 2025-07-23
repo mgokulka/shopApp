@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-xl w-100 navbar-light bg-light">
+  <div class="container-fluid w-100 row d-flex justify-content-between">
+    <div class="heading col-2 fw-bold fs-2">
+      <a class="navbar-brand text-decoration-underline" routerLink="/barcode-scanner">MAYUR DRESSES</a>
+    </div>
+    <div class="col-4">
+      <div class="card flex justify-center">
+        <input type="text" class="text-center" placeholder="Search Item | Accounts | Other" pInputText [(ngModel)]="value" />
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <p-menubar [model]="items" />
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container border border-2 mt-3 shadow rounded">
+  <router-outlet></router-outlet>
+</div>
