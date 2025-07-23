@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { BarcodeScanner } from './barcode-scanner/barcode-scanner';
-
+import { Dashboard } from './components/dashboard/dashboard';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../../environment';
 @Component({
   selector: 'app-root',
-  imports: [ BarcodeScanner],
+  imports: [Dashboard, ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('demoAPp');
 }

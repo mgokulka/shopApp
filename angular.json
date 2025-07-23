@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demoAPp": {
+    "demoapp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -65,10 +65,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demoAPp:build:production"
+              "buildTarget": "demoapp:build:production"
             },
             "development": {
-              "buildTarget": "demoAPp:build:development"
+              "buildTarget": "demoapp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,5 +92,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "92446880-2c75-4fc3-a093-58137ad2132e"
   }
 }
