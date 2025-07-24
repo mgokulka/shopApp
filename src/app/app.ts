@@ -1,12 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Dashboard } from './components/dashboard/dashboard';
-import { AngularFireModule } from '@angular/fire/compat';
+import { getApps, initializeApp } from '@angular/fire/app';
 import { environment } from '../../environment';
 @Component({
   selector: 'app-root',
-  imports: [Dashboard, ],
+  imports: [Dashboard],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
+  ngOnInit() {
+    initializeApp(environment.firebase);
+    console.log('Firebase apps loaded:', getApps());
+    
+  }
 }

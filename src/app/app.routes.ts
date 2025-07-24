@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'barcode-scanner', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'barcode-scanner',
     loadComponent: () =>
@@ -12,11 +12,16 @@ export const routes: Routes = [
   {
     path: 'create-item',
     loadComponent: () =>
-      import('./Item/create-item/create-item').then((m) => m.CreateIte),
+      import('./components/Item/create-item/create-item').then((m) => m.CreateIte),
   },
   {
     path: 'view-items',
     loadComponent: () =>
-      import('./Item/view-item/view-item').then((m) => m.ViewItem),
+      import('./components/Item/view-item/view-item').then((m) => m.ViewItem),
   },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./components/login/login').then((m) => m.LoginComponent),
+  }
 ];

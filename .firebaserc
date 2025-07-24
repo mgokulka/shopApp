@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "staging": "shop-e5ecc",
+    "default": "shop-e5ecc"
+  },
+  "targets": {},
+  "etags": {}
+}

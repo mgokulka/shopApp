@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { PrimengComponentsModule } from '../../shared/primeng-components/primeng-components-module';
+import { PrimengComponentsModule } from '../../shared/primeng-components-module';
 import { MenuItem } from 'primeng/api';
 import { FilterService, SelectItemGroup } from 'primeng/api';
 
