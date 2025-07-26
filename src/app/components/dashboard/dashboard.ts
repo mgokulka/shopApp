@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PrimengComponentsModule } from '../../shared/primeng-components-module';
 import { MenuItem } from 'primeng/api';
-import { FilterService, SelectItemGroup } from 'primeng/api';
-
+import { CONST_ROUTES } from '../login/constant';
 @Component({
   selector: 'app-dashboard',
   imports: [RouterModule, PrimengComponentsModule],
@@ -25,11 +24,11 @@ export class Dashboard {
         items: [
           {
             label: 'New Item',
-            routerLink: '/create-item',
+            routerLink: '/' + CONST_ROUTES.createItem,
           },
           {
             label: 'View Items',
-            routerLink: '/view-items',
+            routerLink: '/'+CONST_ROUTES.allItems,
           },
         ],
       },

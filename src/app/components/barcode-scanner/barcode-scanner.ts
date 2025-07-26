@@ -1,5 +1,5 @@
 import { Component, HostListener, inject } from '@angular/core';
-import { CreateItemService } from '../Item/create-item';
+import { CreateItemService } from '../../shared/create-item';
 
 
 @Component({
