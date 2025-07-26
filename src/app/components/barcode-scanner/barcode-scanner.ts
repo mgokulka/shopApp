@@ -1,11 +1,9 @@
 import { Component, HostListener, inject } from '@angular/core';
-import { CreateIte } from '../Item/create-item/create-item';
-import { CreateItemService } from '../Item/create-item';
-import { ViewItem } from '../Item/view-item/view-item';
+import { CreateItemService } from '../../shared/create-item';
+
 
 @Component({
   selector: 'app-barcode-scanner',
-  imports: [CreateIte,ViewItem],
   templateUrl: './barcode-scanner.html',
   styleUrl: './barcode-scanner.scss',
   standalone: true,

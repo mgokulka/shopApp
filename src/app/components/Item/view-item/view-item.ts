@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CreateItemService, Item } from '../create-item';
+import { CreateItemService, Item } from '../../../shared/create-item';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,10 +28,11 @@ export class ViewItem implements OnChanges {
   searchBarcode: string = '';
   itemForm!: FormGroup;
   @Input() barcodeValue: string = '';
-
+  itemList: Item[] = [];
   constructor(
     private fb: FormBuilder,
-    private itemService: CreateItemService
+    private itemService: CreateItemService,
+    //add product
   ) {}
   itemMasterData: any;
   ngOnChanges() {
@@ -39,6 +40,9 @@ export class ViewItem implements OnChanges {
       this.searchBarcode = this.barcodeValue;
       this.fetchItem();
     }
+    // this.dataService.addItem({ name: 'Shirt', price: 200, stock: 10 } as Item);
+    // this.dataService.deleteItem('abc123');
+    // this.dataService.updateItem('abc123', { price: 250 });
   }
 
   ngOnInit(): void {
@@ -51,8 +55,8 @@ export class ViewItem implements OnChanges {
       sellPrice: [0, [Validators.required, Validators.min(0)]],
       color: [''],
     });
+
     this.itemService.items$.subscribe((data) => (this.itemMasterData = data));
-    debugger;
     if (this.barcodeValue === '') {
       return;
     }

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CreateItemService, Item } from '../create-item';
+import { CreateItemService, Item } from '../../../shared/create-item';
 import {
   FormBuilder,
   FormGroup,
