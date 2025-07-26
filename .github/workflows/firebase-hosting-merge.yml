@@ -19,7 +19,7 @@ jobs:
           node-version: "18" # or whatever version you're using
 
       - name: Install dependencies
-        run: npm install
+        run: npm install -f
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
