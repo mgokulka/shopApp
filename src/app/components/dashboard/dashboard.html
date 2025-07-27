@@ -1,0 +1,32 @@
+<p-drawer
+  [(visible)]="showSidebar"
+  [modal]="true"
+  [dismissible]="true"
+  [closable]="false"
+  [position]="'left'"
+  [style]="{ width: '30%' }"
+>
+  <div class="sidebar-content">
+    <p-tree
+      [filter]="true"
+      filterPlaceholder="Search"
+      [value]="navItems"
+      selectionMode="single"
+      (onNodeSelect)="navigate($event.node)"
+    ></p-tree>
+  </div>
+</p-drawer>
+
+<div class="app-layout">
+  <nav class="navbar">
+    <i class="pi pi-bars menu-icon" (click)="showSidebar = true"></i>
+    <div class="card flex justify-center m-auto p-auto">
+     <p-autocomplete [(ngModel)]="value" [pAutoFocus]="true" [suggestions]="items" (completeMethod)="search($event)" />
+    </div>
+    <span>Mayur Dresses</span>
+  </nav>
+
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,211 @@
+<div class="card">
+  <h5 class="card-header">New Product</h5>
+  <div class="card-body p-5">
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="createItem()"
+      class="container h-50 w-75 m-auto"
+    >
+      <!-- Row 1: Name, Size, Color -->
+      <div class="row mb-3 d-flex">
+        <div class="col-md row">
+          <div class="col-md-8">
+            <label for="barcode">Barcode</label>
+            <input
+              id="barcode"
+              pInputText
+              formControlName="barcode"
+              class="w-100"
+            />
+          </div>
+
+          <div class="col-md-4 d-flex align-items-end">
+            <button
+              pButton
+              type="button"
+              label="Generate Barcode"
+              class="w-100 h-75"
+              (click)="generateBarcode()"
+            ></button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            pInputText
+            formControlName="name"
+            class="w-100 formcontrol-sm"
+            size="snall"
+            placeholder="Shirt"
+          />
+        </div>
+
+        <div class="col-md-1">
+          <label for="color">Color</label><br />
+          <p-colorPicker
+            formControlName="color"
+            styleClass="w-100"
+            [style]="{ height: '2.5rem' }"
+          ></p-colorPicker>
+        </div>
+      </div>
+
+      <!-- Row 2: Cost Price, Selling Price, Tax -->
+      <div class="row mb-3">
+        <div class="col-md-2">
+          <label for="costPrice">Cost Price</label>
+          <input
+            id="costPrice"
+            type="number"
+            pInputText
+            formControlName="costPrice"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="sellingPrice">Selling Price</label>
+          <input
+            id="sellingPrice"
+            type="number"
+            pInputText
+            formControlName="sellingPrice"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="tax">Tax (%)</label>
+          <input
+            id="tax"
+            type="number"
+            pInputText
+            formControlName="tax"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="stock">Available Stock</label>
+          <input
+            id="stock"
+            type="number"
+            pInputText
+            formControlName="stock"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="lowStockAlert">Low Stock Alert</label>
+          <input
+            id="lowStockAlert"
+            type="number"
+            pInputText
+            formControlName="lowStockAlert"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="productImage">Product Image</label>
+          <input
+            type="file"
+            id="productImage"
+            (change)="onImageSelect($event)"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <!-- Row 5: Category, Brand -->
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label for="category">Category</label>
+          <input
+            id="category"
+            pInputText
+            formControlName="category"
+            class="w-100"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label for="brand">Brand</label>
+          <input id="brand" pInputText formControlName="brand" class="w-100" />
+        </div>
+
+        <div class="col-md-6">
+          <label for="size">Size</label>
+
+          <p-scrollpanel [style]="{ width: '100%', height: '200px' }">
+            <div formArrayName="sizes">
+              <div
+                *ngFor="let sizeCtrl of sizes.controls; let i = index"
+                [formGroupName]="i"
+                class="row mb-2"
+              >
+                <div class="col-md-3">
+                  <input
+                    pInputText
+                    placeholder="Size (e.g. M, L, XL)"
+                    formControlName="size"
+                    class="w-100"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <input
+                    type="number"
+                    pInputText
+                    placeholder="Quantity"
+                    formControlName="quantity"
+                    class="w-100"
+                  />
+                </div>
+                <div class="col-md-6 d-flex align-items-between">
+                  <button
+                    pButton
+                    label="Add"
+                    (click)="addSize()"
+                    type="button"
+                    class="p-button-success col-6"
+                  ></button>
+                  <button
+                    pButton
+                    (click)="removeSize(i)"
+                    class="p-button-danger col-6"
+                    type="button"
+                    label="Remove"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </p-scrollpanel>
+        </div>
+      </div>
+
+      <!-- Row 7: Buttons -->
+      <div class="col-md-6 row">
+        <div class="col-md-6">
+          <button
+            pButton
+            type="submit"
+            label="Submit"
+            class="p-button-success w-100"
+            [disabled]="!productForm.valid"
+          ></button>
+        </div>
+        <div class="col-md-6">
+          <button
+            pButton
+            type="button"
+            label="Reset"
+            class="p-button-secondary w-100"
+            (click)="resetForm()"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
