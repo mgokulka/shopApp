@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: CONST_ROUTES.createItem,
     loadComponent: () =>
       import('./components/Item/create-item/create-item').then(
-        (m) => m.CreateIte
+        (m) => m.CreateItem // ✅ FIXED HERE
       ),
   },
   {

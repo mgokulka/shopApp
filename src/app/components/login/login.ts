@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimengComponentsModule } from '../../shared/primeng-components-module';
 import { AuthService } from '../../shared/auth-service';
 import { Router } from '@angular/router';
+import { CONST_ROUTES } from './constant';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
       this._authService
         .signup(email, password)
         .then(() => {
-          this._router.navigate(['/create-item']);
+          this._router.navigate([CONST_ROUTES.createItem]);
         })
         .catch((error) => {
           console.error('Signup error:', error);
@@ -61,7 +62,7 @@ export class LoginComponent implements OnInit {
       this._authService
         .login(email, password)
         .then(() => {
-          this._router.navigate(['/create-item']);
+          this._router.navigate([CONST_ROUTES.createItem]);
         })
         .catch((error) => {
           console.error('Login error:', error);

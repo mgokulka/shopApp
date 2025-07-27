@@ -16,12 +16,12 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-create-item',
   imports: [ReactiveFormsModule, CommonModule, PrimengComponentsModule],
-  providers:[MessageService],
+  providers: [MessageService],
   standalone: true,
   templateUrl: './create-item.html',
   styleUrl: './create-item.scss',
 })
-export class CreateIte implements OnChanges {
+export class CreateItem implements OnChanges {
   productForm!: FormGroup;
   visible = false;
   private barcodeSub!: Subscription;
@@ -29,8 +29,7 @@ export class CreateIte implements OnChanges {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private messageService: MessageService,
-
+    private messageService: MessageService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,12 +54,14 @@ export class CreateIte implements OnChanges {
       imageUrl: [''],
     });
 
-    this.barcodeSub = this.productService.selectedBarcode$.subscribe((barcode) => {
-      if (barcode) {
-        this.productForm.patchValue({ barcode });
-        this.visible = true;
+    this.barcodeSub = this.productService.selectedBarcode$.subscribe(
+      (barcode) => {
+        if (barcode) {
+          this.productForm.patchValue({ barcode });
+          this.visible = true;
+        }
       }
-    });
+    );
   }
   createSizeGroup(): FormGroup {
     return this.fb.group({
