@@ -7,7 +7,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Dialog } from 'primeng/dialog';
 import { Ripple } from 'primeng/ripple';
@@ -22,7 +21,15 @@ import { Rating } from 'primeng/rating';
 import { InputNumber } from 'primeng/inputnumber';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { Table } from 'primeng/table';
+import { DrawerModule } from 'primeng/drawer';
+import { AvatarModule } from 'primeng/avatar';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { TreeModule } from 'primeng/tree';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { ChipModule } from 'primeng/chip';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 @NgModule({
   imports: [
     AutoComplete,
@@ -60,6 +67,15 @@ import { Table } from 'primeng/table';
     Tag,
     Rating,
     InputNumber,
+    DrawerModule,
+    AvatarModule,
+    TreeSelectModule,
+    TreeModule,
+    FileUploadModule,
+    AutoFocusModule,
+    ColorPickerModule,
+    ChipModule,
+    ScrollPanelModule,
   ],
 })
 export class PrimengComponentsModule {}

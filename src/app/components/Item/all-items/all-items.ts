@@ -1,28 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-
-import { TableModule } from 'primeng/table';
-import { Dialog } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import { CommonModule } from '@angular/common';
-import { FileUpload } from 'primeng/fileupload';
-import { SelectModule } from 'primeng/select';
-import { Tag } from 'primeng/tag';
-import { RadioButton } from 'primeng/radiobutton';
-import { Rating } from 'primeng/rating';
-import { FormsModule } from '@angular/forms';
-import { InputNumber } from 'primeng/inputnumber';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { Table } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { ProductService } from '../../../shared/product';
 import { IProduct } from '../../../model/item';
-
+import { CommonModule1 } from '../../../shared/common-module';
+import { Router } from '@angular/router';
+import { CONST_ROUTES } from '../../login/constant';
+import { PrimengComponentsModule } from '../../../shared/primeng-components-module';
+import { Table } from 'primeng/table';
 interface Column {
   field: string;
   header: string;
@@ -38,28 +22,8 @@ interface ExportColumn {
   selector: 'all-item',
   templateUrl: './all-items.html',
   standalone: true,
-  imports: [
-    TableModule,
-    ButtonModule,
-    Dialog,
-    SelectModule,
-    ToastModule,
-    ToolbarModule,
-    ConfirmDialog,
-    InputTextModule,
-    TextareaModule,
-    CommonModule,
-    FileUpload,
-    Tag,
-    RadioButton,
-    Rating,
-    InputTextModule,
-    FormsModule,
-    InputNumber,
-    IconFieldModule,
-    InputIconModule,
-  ],
-  providers: [MessageService, ConfirmationService],
+  imports: [PrimengComponentsModule],
+  providers: [MessageService, ConfirmationService, CommonModule1],
   styles: [
     `
       :host ::ng-deep .p-dialog .product-image {
@@ -93,7 +57,8 @@ export class allItems implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private readonly productService: ProductService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private route: Router
   ) {}
 
   exportCSV() {
@@ -107,6 +72,7 @@ export class allItems implements OnInit {
   loadDemoData() {
     this.productService.getProducts().subscribe((ele: any) => {
       this.products = ele;
+      console.log('Product List>>>>', this.products);
       this.cd.markForCheck();
     });
 
@@ -132,8 +98,9 @@ export class allItems implements OnInit {
 
   openNew() {
     // this.product = {};
-    this.submitted = false;
-    this.productDialog = true;
+    // this.submitted = false;
+    this.route.navigate([CONST_ROUTES.createItem]);
+    // this.productDialog = true;
   }
 
   editProduct(product: IProduct) {
@@ -192,12 +159,24 @@ export class allItems implements OnInit {
       accept: () => {
         this.products = this.products.filter((val) => val.id !== product.id);
         // this.product = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Deleted',
-          life: 3000,
-        });
+        this.productService
+          .deleteProduct(product.id)
+          .then((res) =>
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Product Deleted',
+              life: 3000,
+            })
+          )
+          .catch((err) =>
+            this.messageService.add({
+              severity: 'danger',
+              summary: 'Deletion failed',
+              detail: err,
+              life: 3000,
+            })
+          );
       },
     });
   }
@@ -224,14 +203,15 @@ export class allItems implements OnInit {
     return id;
   }
 
-  getSeverity(status: string) {
+  getSeverity({ stock, lowStockAlert = 1 }: IProduct) {
+    const status = stock % lowStockAlert === 0 ? 'LOWSTOCK' : 'INSTOCK';
     switch (status) {
       case 'INSTOCK':
         return 'success';
       case 'LOWSTOCK':
         return 'warn';
-      case 'OUTOFSTOCK':
-        return 'danger';
+      // case 'OUTOFSTOCK':
+      //   return 'danger';
     }
     return '';
   }

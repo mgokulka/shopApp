@@ -6,10 +6,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CreateItemService, Item } from '../../../shared/create-item';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { IProduct } from '../../../model/item';
+import { ProductService } from '../../../shared/product';
 
 @Component({
   selector: 'app-view-item',
@@ -28,17 +29,15 @@ export class ViewItem implements OnChanges {
   searchBarcode: string = '';
   itemForm!: FormGroup;
   @Input() barcodeValue: string = '';
-  itemList: Item[] = [];
+  itemList: IProduct[] = [];
   constructor(
     private fb: FormBuilder,
-    private itemService: CreateItemService,
-    //add product
+    private productService: ProductService
   ) {}
   itemMasterData: any;
   ngOnChanges() {
     if (this.barcodeValue) {
       this.searchBarcode = this.barcodeValue;
-      this.fetchItem();
     }
     // this.dataService.addItem({ name: 'Shirt', price: 200, stock: 10 } as Item);
     // this.dataService.deleteItem('abc123');
@@ -56,34 +55,21 @@ export class ViewItem implements OnChanges {
       color: [''],
     });
 
-    this.itemService.items$.subscribe((data) => (this.itemMasterData = data));
+    this.productService
+      .getProducts()
+      .subscribe((data) => (this.itemMasterData = data));
     if (this.barcodeValue === '') {
       return;
     }
-    this.fetchItem();
+    this.itemForm.patchValue({});
   }
-
-  fetchItem() {
-    const item = this.itemMasterData.find(
-      (i: { barcode: string }) => i.barcode === this.searchBarcode.trim()
-    );
-
-    if (!item) {
-      alert('Item not found.');
-      this.itemForm.reset();
-      return;
-    }
-
-    this.itemForm.patchValue(item);
-  }
-
   updateItem() {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
 
-    const updatedItem: Item = {
+    const updatedItem: IProduct = {
       ...this.itemForm.getRawValue(), // includes disabled fields
     };
 
@@ -92,7 +78,7 @@ export class ViewItem implements OnChanges {
     );
 
     if (index !== -1) {
-      this.itemService.updateItem(updatedItem);
+      this.productService.updateProduct(10, { name: 'string' });
       alert('Item updated successfully!');
     }
   }

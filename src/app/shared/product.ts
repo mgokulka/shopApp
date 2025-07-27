@@ -8,11 +8,16 @@ import {
   deleteDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct } from '../model/item'; // your product model
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+  private selectedBarcodeSubject = new BehaviorSubject<string | null>(null);
+  selectedBarcode$ = this.selectedBarcodeSubject.asObservable();
+  checkBarcodeExists(barcode: string): boolean {
+    return false; // return this.itemsSubject.value.some((item) => item.barcode === barcode);
+  }
   constructor(private firestore: Firestore) {}
 
   addProduct(item: IProduct) {
@@ -27,12 +32,12 @@ export class ProductService {
     >;
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(id: number | string) {
     const productDoc = doc(this.firestore, `products/${id}`);
     return deleteDoc(productDoc);
   }
 
-  updateProduct(id: string, item: Partial<IProduct>) {
+  updateProduct(id: string|number, item: Partial<IProduct>) {
     const productDoc = doc(this.firestore, `products/${id}`);
     return updateDoc(productDoc, item);
   }
