@@ -21,7 +21,7 @@
   },
   "hosting": {
     "predeploy": ["ng build"],
-    "public": "dist/demoApp/browser",
+    "public": "dist/demoApp",
     "ignore": [
       "firebase.json",
       "**/.*",
