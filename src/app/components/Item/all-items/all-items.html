@@ -21,7 +21,7 @@
         <input pInputText type="text" placeholder="Search..." />
       </p-iconfield>
     </ng-template>
-  
+
     <ng-template #end>
       <p-fileUpload
         mode="basic"
@@ -57,26 +57,33 @@
         <th style="width: 3rem">
           <p-tableHeaderCheckbox />
         </th>
-        <th style="min-width: 16rem">ID</th>
-        <th pSortableColumn="name" style="min-width: 16rem">
+        <th style="min-width: 8rem">Barcode</th>
+        <th pSortableColumn="name" style="min-width: 8rem">
           <div class="flex items-center gap-2">
             Name
             <p-sortIcon field="name" />
           </div>
         </th>
-        <th>Image</th>
-        <th pSortableColumn="price" style="min-width: 8rem">
+        <th pSortableColumn="brand" style="min-width: 8rem">
           <div class="flex items-center gap-2">
-            Price
-            <p-sortIcon field="price" />
+            brand
+            <p-sortIcon field="brand" />
           </div>
         </th>
-        <th pSortableColumn="category" style="min-width: 10rem">
+        <th pSortableColumn="category" style="min-width: 8rem">
           <div class="flex items-center gap-2">
-            Category
+            category
             <p-sortIcon field="category" />
           </div>
         </th>
+        <th pSortableColumn="color" style="min-width: 8rem">
+          <div class="flex items-center gap-2">
+            color
+            <p-sortIcon field="color" />
+          </div>
+        </th>
+        <th>Image</th>
+
         <th pSortableColumn="rating" style="min-width: 12rem">
           <div class="flex items-center gap-2">
             sellingPrice
@@ -89,7 +96,19 @@
             <p-sortIcon field="inventoryStatus" />
           </div>
         </th>
-        <th style="min-width: 12rem"></th>
+        <th pSortableColumn="lowStockAlert" style="min-width: 12rem">
+          <div class="flex items-center gap-2">
+            Low Stock Alert
+            <p-sortIcon field="lowStockAlert" />
+          </div>
+        </th>
+        <th pSortableColumn="sizes" style="min-width: 12rem">
+          <div class="flex items-center gap-2">
+            Sizes
+            <p-sortIcon field="sizes" />
+          </div>
+        </th>
+        <th style="min-width: 12rem">Actions</th>
       </tr>
     </ng-template>
     <ng-template #body let-product>
@@ -97,29 +116,47 @@
         <td style="width: 3rem">
           <p-tableCheckbox [value]="product" />
         </td>
-        <td style="min-width: 12rem">{{ product.code }}</td>
-        <td style="min-width: 16rem">{{ product.name }}</td>
+        <td>{{ product.barcode }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.brand }}</td>
+        <td>{{ product.category }}</td>
+        <td>
+          <p-colorPicker
+            [ngModel]="product.color"
+            styleClass="w-100"
+            [style]="{ height: '2.5rem' }"
+          ></p-colorPicker>
+        </td>
         <td>
           <img
             [src]="
               'https://primefaces.org/cdn/primeng/images/demo/product/' +
-              product.image
+              product.imageUrl
             "
             [alt]="product.name"
             style="width: 64px"
             class="rounded"
           />
         </td>
-        <td>{{ product.price | currency : "USD" }}</td>
-        <td>{{ product.category }}</td>
-        <td>
-          <p-rating [(ngModel)]="product.rating" [readonly]="true" />
-        </td>
-        <td>
+        <td>{{ product.sellingPrice | currency : "INR" }}</td>
+        <td>{{ product.costPrice | currency : "INR" }}</td>
+  <td>
           <p-tag
-            [value]="product.inventoryStatus"
-            [severity]="getSeverity(product.inventoryStatus)"
+            [value]="product.lowStockAlert"
+            [severity]="getSeverity(product)"
           />
+        </td>          
+        <td>
+          @for(size of product.sizes; track $index){
+          <p-chip class="!py-0 !pl-0 !pr-4">
+            <span
+              class="bg-primary border-circle rounded-pill px-2 text-primary-contrast rounded-full w-8 h-8 flex items-center justify-center"
+            >
+              {{ size.size }}
+            </span>
+            <span class="ml-2 font-medium"> {{ size.quantity }} </span>
+          </p-chip>
+          }
         </td>
         <td>
           <p-button
@@ -141,7 +178,7 @@
     </ng-template>
   </p-table>
 
-  <p-dialog
+  <!-- <p-dialog
     [(visible)]="productDialog"
     [style]="{ width: '450px' }"
     header="Product Details"
@@ -265,7 +302,7 @@
       <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
       <p-button label="Save" icon="pi pi-check" />
     </ng-template>
-  </p-dialog>
+  </p-dialog> -->
 
   <p-confirmDialog [style]="{ width: '450px' }" />
 </div>

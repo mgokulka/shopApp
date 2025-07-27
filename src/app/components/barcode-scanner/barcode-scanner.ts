@@ -1,5 +1,5 @@
 import { Component, HostListener, inject } from '@angular/core';
-import { CreateItemService } from '../../shared/create-item';
+import { ProductService } from '../../shared/product';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class BarcodeScanner {
 
   private buffer: string = '';
   private lastScanTime: number = 0;
-  private _ItemsService = inject(CreateItemService);
+  private productService = inject(ProductService);
   showCreateItemComponent: boolean = false;
   @HostListener('document:keypress', ['$event'])
   handleKeyPress(event: KeyboardEvent) {
@@ -25,7 +25,7 @@ export class BarcodeScanner {
     if (event.key === 'Enter') {
       this.scannedCode = this.buffer;
       this.buffer = '';
-      const check = this._ItemsService.checkBarcodeExists(this.scannedCode);
+      const check = this.productService.checkBarcodeExists(this.scannedCode);
       if (!check) {
         this.showCreateItemComponent = true;
       }
