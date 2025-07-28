@@ -1,32 +1,8 @@
 {
-  "emulators": {
-    "auth": {
-      "port": 9099
-    },
-    "ui": {
-      "enabled": true
-    },
-    "singleProjectMode": true,
-    "apphosting": {
-      "port": 9999,
-      "rootDirectory": "./",
-      "startCommand": "npm run dev"
-    },
-    "firestore": {
-      "port": 8080
-    },
-    "hosting": {
-      "port": 8081
-    }
-  },
   "hosting": {
-    "predeploy": ["ng build"],
+    "predeploy": ["ng build --output-path=dist"],
     "public": "dist/demoApp",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",

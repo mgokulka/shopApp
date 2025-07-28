@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: 'create-item',
     loadComponent: () =>
       import('./components/Item/create-item/create-item').then(
-        (m) => m.CreateItem // ✅ FIXED HERE
+        (m) => m.CreateItem
       ),
   },
   {
