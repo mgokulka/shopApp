@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CONST_ROUTES } from './components/login/constant';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -34,27 +34,27 @@ export class Dashboard {
         { label: 'Create', data: CONST_ROUTES.createItem },
         { label: 'List', data: CONST_ROUTES.allItems },
         { label: 'Read', data: CONST_ROUTES.viewItems },
-        { label: 'Update', data: '/product/update' },
-        { label: 'Delete', data: '/product/delete' },
+        // { label: 'Update', data: '/product/update' },
+        // { label: 'Delete', data: '/product/delete' },
       ],
     },
-    {
-      label: 'Accounts',
-      children: [
-        { label: 'Create', data: '/accounts/create' },
-        { label: 'Read', data: '/accounts/read' },
-        { label: 'Update', data: '/accounts/update' },
-        { label: 'Delete', data: '/accounts/delete' },
-      ],
-    },
-    {
-      label: 'Billing',
-      children: [
-        { label: 'Create New', data: '/billing/new' },
-        { label: 'Search', data: '/billing/search' },
-        { label: 'Modify', data: '/billing/modify' },
-      ],
-    },
+    // {
+    //   label: 'Accounts',
+    //   children: [
+    //     { label: 'Create', data: '/accounts/create' },
+    //     { label: 'Read', data: '/accounts/read' },
+    //     { label: 'Update', data: '/accounts/update' },
+    //     { label: 'Delete', data: '/accounts/delete' },
+    //   ],
+    // },
+    // {
+    //   label: 'Billing',
+    //   children: [
+    //     { label: 'Create New', data: '/billing/new' },
+    //     { label: 'Search', data: '/billing/search' },
+    //     { label: 'Modify', data: '/billing/modify' },
+    //   ],
+    // },
   ];
 
   constructor(private router: Router) {}
