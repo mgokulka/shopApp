@@ -1,8 +1,11 @@
 {
   "hosting": {
-    "predeploy": ["ng build --output-path=dist"],
-    "public": "dist/demoApp",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "public": "dist/demoapp/",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
