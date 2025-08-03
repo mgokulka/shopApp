@@ -1,3 +1,4 @@
+@if(isLoggedIn){
 <p-drawer
   [(visible)]="showSidebar"
   [modal]="true"
@@ -19,14 +20,55 @@
 
 <div class="app-layout">
   <nav class="navbar">
-    <i class="pi pi-bars menu-icon" (click)="showSidebar = true"></i>
-    <div class="card flex justify-center m-auto p-auto">
-     <p-autocomplete [(ngModel)]="value" [pAutoFocus]="true" [suggestions]="items" (completeMethod)="search($event)" />
-    </div>
-    <span>Mayur Dresses</span>
+    <!-- <i class="pi pi-bars menu-icon" (click)="showSidebar = true"></i> -->
+    <span>
+      <img
+        src="./logo.png"
+        alt="Brand Logo"
+        style="width: 64px"
+        class="rounded"
+      />
+      <span class="m-2 fs-3  text-decoration-underline">Mayur Dresses</span>
+    </span>
   </nav>
+  <div class="container my-3 border">
+    <div class="row p-2">
+      <!-- <div class="col-md-2">
+        <p-button label="New Bill" icon="pi pi-plus" class="mr-2" />
+        <p-dialog
+          [autoZIndex]="true"
+          [baseZIndex]="1111"
+          appendTo="body"
+          header="Edit Profile"
+          [modal]="true"
+          [(visible)]="visible"
+          [style]="{ width: '25rem' }"
+        >
+          <ng-template #content> Hello G </ng-template>
 
+          <span class="p-text-secondary block mb-8"
+            >Update your information.</span
+          >
+        </p-dialog>
+      </div> -->
+      <div class="col-md-2">
+        <p-select
+          [options]="cities"
+          [(ngModel)]="selectedCity"
+          (onChange)="onChange($event)"
+          optionLabel="name"
+          placeholder="Start From here"
+          class="w-full md:w-56"
+        />
+      </div>
+      <!-- <div class="col-md-4">col-md-4</div> -->
+    </div>
+  </div>
   <main class="content-area">
     <router-outlet></router-outlet>
   </main>
 </div>
+
+}@else {
+<app-login (isLoggedIn)="loginStatus($event)"></app-login>
+}

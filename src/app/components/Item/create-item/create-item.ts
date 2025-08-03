@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -10,12 +17,18 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { IProduct } from '../../../model/item';
 import { PrimengComponentsModule } from '../../../shared/primeng-components-module';
-import { ProductService } from '../../../shared/product';
+import { COLLECTION_CONSTANT, ProductService } from '../../../shared/product';
 import { MessageService } from 'primeng/api';
+import { FileUpload } from '../../common-component/file-upload/file-upload';
 
 @Component({
   selector: 'app-create-item',
-  imports: [ReactiveFormsModule, CommonModule, PrimengComponentsModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PrimengComponentsModule,
+    FileUpload,
+  ],
   providers: [MessageService],
   standalone: true,
   templateUrl: './create-item.html',
@@ -23,9 +36,10 @@ import { MessageService } from 'primeng/api';
 })
 export class CreateItem implements OnChanges {
   productForm!: FormGroup;
-  visible = false;
+  @Input() currentProduct!: IProduct;
   private barcodeSub!: Subscription;
   @Input() barcodeValue: any = '';
+  @Output() closePopup: EventEmitter<boolean> = new EventEmitter();
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
@@ -38,6 +52,7 @@ export class CreateItem implements OnChanges {
 
   ngOnInit() {
     this.productForm = this.fb.group({
+      id: [''],
       barcode: ['', Validators.required],
       name: ['', Validators.required],
       sizes: this.fb.array([
@@ -53,12 +68,16 @@ export class CreateItem implements OnChanges {
       tax: [0],
       imageUrl: [''],
     });
+    const sizeCount = this.currentProduct.sizes.length;
+    for (let i = 1; i < sizeCount; i++) {
+      this.sizes.push(this.createSizeGroup());
+    }
+    this.productForm.patchValue(this.currentProduct);
 
     this.barcodeSub = this.productService.selectedBarcode$.subscribe(
       (barcode) => {
         if (barcode) {
           this.productForm.patchValue({ barcode });
-          this.visible = true;
         }
       }
     );
@@ -98,27 +117,26 @@ export class CreateItem implements OnChanges {
     const control = this.productForm.get(controlName);
     return (control && control.invalid && control.touched) ?? false;
   }
-
-  onImageSelect(event: any) {
-    const file = event.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.productForm.patchValue({ imageUrl: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   createItem() {
     if (this.productForm.valid) {
       const product: IProduct = this.productForm.value;
-      console.log('Submitting Product:', product);
-      this.productService
-        .addProduct(product)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-      // Firebase or API call
+      if (product.id !== '') {
+        this.productService
+          .updateProduct(product.id, product, COLLECTION_CONSTANT.Product)
+          .then((res) => {
+            console.log(res);
+            this.closePopup.emit(true);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.productService
+          .addProduct(product, COLLECTION_CONSTANT.Product)
+          .then((res) => {
+            console.log(res);
+            this.closePopup.emit(true);
+          })
+          .catch((err) => console.log(err));
+      }
     }
   }
 

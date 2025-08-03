@@ -1,0 +1,19 @@
+::ng-deep .p-table .p-datatable-tbody > tr.p-highlight {
+  background-color: rgba(255, 255, 255, 0.3); /* semi-transparent white */
+  backdrop-filter: blur(4px); /* blur effect */
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  transition: all 0.3s ease-in-out;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); /* subtle inner border */
+}
+
+::ng-deep .p-table .p-datatable-tbody > tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transition: all 0.2s ease-in-out;
+}
+
+::ng-deep .p-datatable-tbody > tr.p-datatable-row-selected {
+  background-color: rgba(255, 255, 255, 0.3) !important; /* semi-transparent white */
+  color: var(--p-datatable-row-selected-color);
+}

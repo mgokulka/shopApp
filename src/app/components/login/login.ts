@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimengComponentsModule } from '../../shared/primeng-components-module';
 import { AuthService } from '../../shared/auth-service';
@@ -13,6 +13,7 @@ import { CONST_ROUTES } from './constant';
   styleUrls: ['./login.scss'],
 })
 export class LoginComponent implements OnInit {
+  @Output() isLoggedIn: EventEmitter<boolean> = new EventEmitter(false);
   ngOnInit(): void {
     console.log('navigator.onLine:', navigator.onLine);
   }
@@ -62,8 +63,10 @@ export class LoginComponent implements OnInit {
       this._authService
         .login(email, password)
         .then(() => {
-          this._router.navigate([CONST_ROUTES.createItem]);
+          // this._router.navigate([CONST_ROUTES.createItem]);
+          this.isLoggedIn.emit(true);
         })
+
         .catch((error) => {
           console.error('Login error:', error);
         });

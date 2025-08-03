@@ -21,8 +21,3 @@ interface ISizes {
   quantity: number;
   size: string;
 }
-export const sizes = [
-  { size: 'M', quantity: 12 },
-  { size: 'L', quantity: 7 },
-  { size: 'XL', quantity: 20 },
-];

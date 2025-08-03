@@ -1,4 +1,4 @@
-<div class="container-fluid d-flex justify-content-center align-items-center vh-100 bg-light">
+<div class="container-fluid d-flex justify-content-center align-items-center h-100 bg-light">
   <div class="row shadow-lg rounded border bg-white p-4 login-box">
 
     <!-- Left Branding -->
@@ -11,40 +11,38 @@
 
     <!-- Right Login -->
     <div class="col-md-6 d-flex flex-column justify-content-center px-4">
-      <h4 class="fw-bold text-center mb-4">Member Login</h4>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Email -->
+     
         <div class="input-group mb-3">
-          <span class="input-group-text"><i class="pi pi-envelope"></i></span>
-          <input pInputText formControlName="email" class="form-control" placeholder="Email" />
+          <span class="input-group-text w-25 d-flex justify-content-center"><i class="pi pi-envelope"></i></span>
+          <input pInputText formControlName="email" class="w-75" placeholder="Email" />
         </div>
 
         <!-- Password -->
         <div class="input-group mb-3">
-          <span class="input-group-text"><i class="pi pi-lock"></i></span>
-          <input pPassword formControlName="password" class="form-control" placeholder="Password" [feedback]="false" />
+          <span class="input-group-text w-25 d-flex justify-content-center"><i class="pi pi-lock"></i></span>
+          <input pPassword formControlName="password" class="w-75" placeholder="Password" [feedback]="false" />
         </div>
 
         <!-- Confirm Password (SignUp only) -->
         <div *ngIf="isSignUp" class="input-group mb-3">
-          <span class="input-group-text"><i class="pi pi-lock"></i></span>
-          <input pPassword formControlName="confirmPassword" class="form-control" placeholder="Re-enter Password" [feedback]="false" />
+          <span class="input-group-text w-25 d-flex justify-content-center"><i class="pi pi-lock"></i></span>
+          <input pPassword formControlName="confirmPassword" class="w-75" placeholder="Re-enter Password" [feedback]="false" />
         </div>
 
         <!-- Links -->
         <div class="d-flex justify-content-between align-items-center mb-3 text-uppercase small fw-bold">
-          <span class="text-success cursor-pointer" (click)="toggleSignUp()">New User</span>
-          <span class="text-warning cursor-pointer">Forget Password</span>
+          <span class="text-light cursor-pointer" (click)="toggleSignUp()">New User</span>
+          <!-- <span class="text-warning cursor-pointer">Forget Password</span> -->
         </div>
 
         <!-- Submit Button -->
-        <button pButton type="submit" label="Login" class="w-100 p-button-success p-button-lg fw-bold text-uppercase"></button>
+        <button pButton type="submit" label="Login" class="w-100 p-button-light bg-light text-dark border border-secondary p-button-lg fw-bold text-uppercase"></button>
 
         <!-- Mode Label -->
-        <div class="text-center mt-2 text-muted small">
-          {{ isSignUp ? 'Sign Up Mode' : 'Login Mode' }}
-        </div>
+       
       </form>
     </div>
   </div>

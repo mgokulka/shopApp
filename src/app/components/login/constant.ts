@@ -1,7 +1,15 @@
-export const CONST_ROUTES={
-    barcode_scanner:'/barcode-scanner',
-    createItem:'/create-item',
-    viewItems:'/view-items',
-    login:'/login',
-    allItems:'/all-items'
-}
+export const CONST_ROUTES = {
+  barcode_scanner: 'barcode-scanner',
+  createItem: 'item/create-item',
+  viewItems: 'item/view-items',
+  login: 'login',
+  allItems: 'item/all-items',
+  accountList: 'accounts/List',
+  accountCreate: 'accounts/create',
+  accountEdit: 'accounts/edit',
+  // allItems: 'item/all-items',
+  // allItems: 'item/all-items',
+  // allItems: 'item/all-items',
+  // allItems: 'item/all-items',
+  // allItems: 'item/all-items',
+};

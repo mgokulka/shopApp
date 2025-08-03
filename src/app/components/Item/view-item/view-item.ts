@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IProduct } from '../../../model/item';
-import { ProductService } from '../../../shared/product';
+import { COLLECTION_CONSTANT, ProductService } from '../../../shared/product';
 
 @Component({
   selector: 'app-view-item',
@@ -56,7 +56,7 @@ export class ViewItem implements OnChanges {
     });
 
     this.productService
-      .getProducts()
+      .getProducts(COLLECTION_CONSTANT.Product)
       .subscribe((data) => (this.itemMasterData = data));
     if (this.barcodeValue === '') {
       return;
@@ -78,7 +78,7 @@ export class ViewItem implements OnChanges {
     );
 
     if (index !== -1) {
-      this.productService.updateProduct(10, { name: 'string' });
+      this.productService.updateProduct(10, { name: 'string' },COLLECTION_CONSTANT.Product);
       alert('Item updated successfully!');
     }
   }

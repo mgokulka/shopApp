@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h3>Edit Account</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row g-3 mt-3">
+
+    <div class="col-md-6">
+      <label for="name" class="form-label">Account Name</label>
+      <input id="name" pInputText class="form-control" formControlName="name" />
+    </div>
+
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" pInputText class="form-control" formControlName="email" />
+    </div>
+
+    <div class="col-md-6">
+      <label for="phone" class="form-label">Phone</label>
+      <input id="phone" pInputText class="form-control" formControlName="phone" />
+    </div>
+
+    <div class="col-md-6">
+      <label for="gstNumber" class="form-label">GST Number</label>
+      <input id="gstNumber" pInputText class="form-control" formControlName="gstNumber" />
+    </div>
+
+    <div class="col-12 d-flex justify-content-end">
+      <button type="submit" pButton label="Update Account" class="p-button-success me-2" [disabled]="form.invalid"></button>
+      <button type="button" pButton label="Cancel" class="p-button-secondary" (click)="router.navigate(['/accounts/list'])"></button>
+    </div>
+  </form>
+</div>

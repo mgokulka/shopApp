@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProductService } from '../../../shared/product';
+import { COLLECTION_CONSTANT, ProductService } from '../../../shared/product';
 import { IProduct } from '../../../model/item';
 import { CommonModule1 } from '../../../shared/common-module';
 import { Router } from '@angular/router';
 import { CONST_ROUTES } from '../../login/constant';
 import { PrimengComponentsModule } from '../../../shared/primeng-components-module';
 import { Table } from 'primeng/table';
+import { CreateItem } from '../create-item/create-item';
 interface Column {
   field: string;
   header: string;
@@ -17,12 +18,15 @@ interface ExportColumn {
   title: string;
   dataKey: string;
 }
-
+export enum EHeaderTitles {
+  editProduct = 'Edit Product',
+  createProdcut = 'Create Product',
+}
 @Component({
   selector: 'all-item',
   templateUrl: './all-items.html',
   standalone: true,
-  imports: [PrimengComponentsModule],
+  imports: [PrimengComponentsModule, CreateItem],
   providers: [MessageService, ConfirmationService, CommonModule1],
   styles: [
     `
@@ -36,12 +40,27 @@ interface ExportColumn {
 })
 export class allItems implements OnInit {
   productDialog: boolean = false;
-
+  dialogHeader: { title: EHeaderTitles; showDelete: boolean } = {
+    title: EHeaderTitles.createProdcut,
+    showDelete: false,
+  };
   products!: IProduct[];
 
-  product!: IProduct;
-
-  selectedProducts!: IProduct[] | null;
+  selectedProduct: IProduct = {
+    id: 0,
+    name: '',
+    category: '',
+    brand: '',
+    sizes: [],
+    color: '',
+    barcode: '',
+    costPrice: 0,
+    sellingPrice: 0,
+    tax: 0,
+    stock: 0,
+    lowStockAlert: 0,
+    imageUrl: '',
+  };
 
   submitted: boolean = false;
 
@@ -70,11 +89,13 @@ export class allItems implements OnInit {
   }
 
   loadDemoData() {
-    this.productService.getProducts().subscribe((ele: any) => {
-      this.products = ele;
-      console.log('Product List>>>>', this.products);
-      this.cd.markForCheck();
-    });
+    this.productService
+      .getProducts(COLLECTION_CONSTANT.Product)
+      .subscribe((ele: any) => {
+        this.products = ele;
+        console.log('Product List>>>>', this.products);
+        this.cd.markForCheck();
+      });
 
     this.statuses = [
       { label: 'INSTOCK', value: 'instock' },
@@ -97,14 +118,42 @@ export class allItems implements OnInit {
   }
 
   openNew() {
-    // this.product = {};
-    // this.submitted = false;
-    this.route.navigate([CONST_ROUTES.createItem]);
-    // this.productDialog = true;
+    this.submitted = false;
+    this.dialogHeader = {
+      title: EHeaderTitles.createProdcut,
+      showDelete: false,
+    };
+    this.resetSelectedProduct();
+    this.productDialog = true;
+  }
+  closeProductDialog() {
+    this.productDialog = false;
+    this.resetSelectedProduct();
+  }
+  resetSelectedProduct() {
+    this.selectedProduct = {
+      id: '',
+      name: '',
+      category: '',
+      brand: '',
+      sizes: [],
+      color: '',
+      barcode: '',
+      costPrice: 0,
+      sellingPrice: 0,
+      tax: 0,
+      stock: 0,
+      lowStockAlert: 0,
+      imageUrl: '',
+    };
   }
 
-  editProduct(product: IProduct) {
-    this.product = { ...product };
+  editProduct(product: IProduct | any) {
+    this.selectedProduct = product;
+    this.dialogHeader = {
+      title: EHeaderTitles.editProduct,
+      showDelete: true,
+    };
     this.productDialog = true;
   }
 
@@ -123,16 +172,14 @@ export class allItems implements OnInit {
         label: 'Yes',
       },
       accept: () => {
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts?.includes(val)
-        );
-        this.selectedProducts = null;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'Products Deleted',
           life: 3000,
         });
+        this.resetSelectedProduct();
+        this.productDialog = false;
       },
     });
   }

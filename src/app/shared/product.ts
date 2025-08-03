@@ -10,7 +10,11 @@ import {
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct } from '../model/item'; // your product model
-
+import { IAccounts } from '../model/accounts';
+export const COLLECTION_CONSTANT = {
+  Product: 'products',
+  Account: 'accounts',
+};
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private selectedBarcodeSubject = new BehaviorSubject<string | null>(null);
@@ -20,13 +24,13 @@ export class ProductService {
   }
   constructor(private firestore: Firestore) {}
 
-  addProduct(item: IProduct) {
-    const productCollection = collection(this.firestore, 'products');
+  addProduct(item: any, collectionName: string) {
+    const productCollection = collection(this.firestore, collectionName);
     return addDoc(productCollection, item);
   }
 
-  getProducts(): Observable<IProduct[]> {
-    const productCollection = collection(this.firestore, 'products');
+  getProducts(collectionName: string): Observable<IProduct[]> {
+    const productCollection = collection(this.firestore, collectionName);
     return collectionData(productCollection, { idField: 'id' }) as Observable<
       IProduct[]
     >;
@@ -37,8 +41,12 @@ export class ProductService {
     return deleteDoc(productDoc);
   }
 
-  updateProduct(id: string|number, item: Partial<IProduct>) {
-    const productDoc = doc(this.firestore, `products/${id}`);
+  updateProduct(id: string | number, item: any, collectionName: string) {
+    const productDoc = doc(this.firestore, `${collectionName}/${id}`);
     return updateDoc(productDoc, item);
+  }
+  getByID(id: number | string) {
+    const docRef = doc(this.firestore, `accounts/${id}`);
+    const snapshot = docRef;
   }
 }

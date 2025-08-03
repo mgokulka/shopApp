@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { environment } from '../../environment';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -46,6 +47,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
+    provideStorage(() => getStorage()),
 
     providePrimeNG({
       theme: {

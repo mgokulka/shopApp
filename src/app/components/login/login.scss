@@ -1,6 +1,7 @@
 .login-box {
-  max-width: 900px;
-  border-radius: 1rem;
+  height: 30rem;
+  width: 50rem;
+  background: linear-gradient(343deg, #000000, transparent);
 }
 
 .brand-box {
@@ -10,13 +11,13 @@
 }
 
 .brand-title {
-  font-family: 'Impact', sans-serif;
+  font-family: "Impact", sans-serif;
   font-size: 2.5rem;
   letter-spacing: 1px;
 }
 
 .brand-subtitle {
-  font-family: 'Impact', sans-serif;
+  font-family: "Impact", sans-serif;
   font-size: 2rem;
   letter-spacing: 1px;
 }
@@ -31,4 +32,10 @@
 
 input.form-control {
   border-radius: 999px !important;
+}
+
+
+:host ::ng-deep .p-inputgroup .p-inputtext, .p-inputgroup .p-inputwrapper{
+  width: 100% !important;
+  border-radius: 10px;
 }

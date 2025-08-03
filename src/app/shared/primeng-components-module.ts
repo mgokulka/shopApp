@@ -28,14 +28,22 @@ import { TreeModule } from 'primeng/tree';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { ChipModule } from 'primeng/chip';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ImageModule } from 'primeng/image';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   imports: [
     AutoComplete,
     InputTextModule,
     RadioButton,
     Dialog,
+    InputNumberModule,
     Ripple,
     ConfirmDialog,
     FileUpload,
@@ -46,6 +54,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
   exports: [
     CommonModule,
     AutoComplete,
+    DialogModule,
     InputTextModule,
     FormsModule,
     MenubarModule,
@@ -59,6 +68,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ToolbarModule,
     ToastModule,
     SelectModule,
+    KeyFilterModule,
     RadioButton,
     Dialog,
     Ripple,
@@ -66,11 +76,15 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     FileUpload,
     Tag,
     Rating,
+    InputMaskModule,
     InputNumber,
     DrawerModule,
     AvatarModule,
+    ImageModule,
     TreeSelectModule,
     TreeModule,
+    InputGroupModule,
+    InputGroupAddonModule,
     FileUploadModule,
     AutoFocusModule,
     ColorPickerModule,

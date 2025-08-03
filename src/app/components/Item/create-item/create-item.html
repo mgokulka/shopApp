@@ -1,10 +1,9 @@
 <div class="card">
-  <h5 class="card-header">New Product</h5>
-  <div class="card-body p-5">
+  <div class="card-body">
     <form
       [formGroup]="productForm"
       (ngSubmit)="createItem()"
-      class="container h-50 w-75 m-auto"
+      class="container h-50 w-auto m-auto"
     >
       <!-- Row 1: Name, Size, Color -->
       <div class="row mb-3 d-flex">
@@ -110,12 +109,17 @@
 
         <div class="col-md-2">
           <label for="productImage">Product Image</label>
-          <input
+          <app-file-upload
+            (fileBase64Image)="
+              productForm.controls['imageUrl'].setValue($event)
+            "
+          ></app-file-upload>
+          <!-- <input
             type="file"
             id="productImage"
             (change)="onImageSelect($event)"
             class="form-control"
-          />
+          /> -->
         </div>
       </div>
 

@@ -6,10 +6,15 @@ import { CONST_ROUTES } from '../login/constant';
 import { CommonModule1 } from '../../shared/common-module';
 import { AutoCompleteCompleteEvent } from '../../model/primengModels';
 import { TreeNode } from 'primeng/api';
-
+import { LoginComponent } from '../login/login';
+import { SelectChangeEvent } from 'primeng/select';
+interface City {
+  name: string;
+  code: string;
+}
 @Component({
   selector: 'app-dashboard',
-  imports: [PrimengComponentsModule, CommonModule1],
+  imports: [PrimengComponentsModule, CommonModule1, LoginComponent],
   templateUrl: './dashboard.html',
   standalone: true,
   styleUrl: './dashboard.scss',
@@ -18,7 +23,11 @@ export class Dashboard {
   showSidebar: boolean = false;
   items: any[] = [];
   value: any;
-
+  loginStatus(event: boolean) {
+    this.isLoggedIn = event;
+    ``;
+  }
+  isLoggedIn: boolean = true;
   search(event: AutoCompleteCompleteEvent) {
     let _items = [...Array(10).keys()];
 
@@ -26,7 +35,17 @@ export class Dashboard {
       ? [...Array(10).keys()].map((item) => event.query + '-' + item)
       : _items;
   }
-  ngOnInit() {}
+  cities: City[] = [];
+
+  selectedCity!: City;
+  ngOnInit() {
+    this.cities = [
+      { name: 'Product', code: CONST_ROUTES.allItems },
+      { name: 'Accounts', code: CONST_ROUTES.accountList },
+      { name: 'Read', code: CONST_ROUTES.viewItems },
+    ];
+    // this.selectedCity = this.cities[0];
+  }
   navItems: TreeNode[] = [
     {
       label: 'Product',
@@ -34,19 +53,16 @@ export class Dashboard {
         { label: 'Create', data: CONST_ROUTES.createItem },
         { label: 'List', data: CONST_ROUTES.allItems },
         { label: 'Read', data: CONST_ROUTES.viewItems },
-        // { label: 'Update', data: '/product/update' },
-        // { label: 'Delete', data: '/product/delete' },
       ],
     },
-    // {
-    //   label: 'Accounts',
-    //   children: [
-    //     { label: 'Create', data: '/accounts/create' },
-    //     { label: 'Read', data: '/accounts/read' },
-    //     { label: 'Update', data: '/accounts/update' },
-    //     { label: 'Delete', data: '/accounts/delete' },
-    //   ],
-    // },
+    {
+      label: 'Accounts',
+      children: [
+        { label: 'Create', data: CONST_ROUTES.accountCreate },
+        { label: 'Edit', data: CONST_ROUTES.accountEdit },
+        { label: 'List', data: CONST_ROUTES.accountList },
+      ],
+    },
     // {
     //   label: 'Billing',
     //   children: [
@@ -64,5 +80,15 @@ export class Dashboard {
       this.router.navigate([node.data]);
       this.showSidebar = false;
     }
+  }
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
+  }
+  onChange(event: SelectChangeEvent) {
+    debugger;
+    this.router.navigate([event.value.code]);
   }
 }
