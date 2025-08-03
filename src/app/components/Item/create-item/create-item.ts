@@ -36,6 +36,13 @@ import { FileUpload } from '../../common-component/file-upload/file-upload';
 })
 export class CreateItem implements OnChanges {
   productForm!: FormGroup;
+  availableSizes = [
+    { label: 'S', value: 'S' },
+    { label: 'M', value: 'M' },
+    { label: 'L', value: 'L' },
+    { label: 'XL', value: 'XL' },
+    { label: 'XXL', value: 'XXL' },
+  ];
   @Input() currentProduct!: IProduct;
   private barcodeSub!: Subscription;
   @Input() barcodeValue: any = '';

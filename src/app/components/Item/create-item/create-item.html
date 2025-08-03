@@ -13,8 +13,9 @@
             <input
               id="barcode"
               pInputText
+              class="p-1"
               formControlName="barcode"
-              class="w-100"
+              class="w-100 formcontrol-sm"
             />
           </div>
 
@@ -22,7 +23,7 @@
             <button
               pButton
               type="button"
-              label="Generate Barcode"
+              label="Barcode"
               class="w-100 h-75"
               (click)="generateBarcode()"
             ></button>
@@ -33,6 +34,7 @@
           <input
             id="name"
             pInputText
+            class="p-1"
             formControlName="name"
             class="w-100 formcontrol-sm"
             size="snall"
@@ -58,6 +60,7 @@
             id="costPrice"
             type="number"
             pInputText
+            class="p-1"
             formControlName="costPrice"
             class="w-100"
           />
@@ -69,6 +72,7 @@
             id="sellingPrice"
             type="number"
             pInputText
+            class="p-1"
             formControlName="sellingPrice"
             class="w-100"
           />
@@ -80,6 +84,7 @@
             id="tax"
             type="number"
             pInputText
+            class="p-1"
             formControlName="tax"
             class="w-100"
           />
@@ -91,6 +96,7 @@
             id="stock"
             type="number"
             pInputText
+            class="p-1"
             formControlName="stock"
             class="w-100"
           />
@@ -102,18 +108,51 @@
             id="lowStockAlert"
             type="number"
             pInputText
+            class="p-1"
             formControlName="lowStockAlert"
             class="w-100"
           />
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <label for="brand">Brand</label>
+          <input
+            id="brand"
+            pInputText
+            class="p-1"
+            formControlName="brand"
+            class="w-100"
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="category">Category</label>
+          <input
+            id="category"
+            pInputText
+            class="p-1"
+            formControlName="category"
+            class="w-100"
+          />
+        </div>
+      </div>
+
+      <!-- Row 5: Category, Brand -->
+      <div class="row mb-3">
+        <div class="col-md-7">
           <label for="productImage">Product Image</label>
           <app-file-upload
             (fileBase64Image)="
               productForm.controls['imageUrl'].setValue($event)
             "
           ></app-file-upload>
+          @if(productForm.get('imageUrl')?.value!==''){
+          <img
+            [src]="productForm.get('imageUrl')?.value"
+            alt="Product Image"
+            style="width: 200px"
+            class="rounded"
+          />
+          }
           <!-- <input
             type="file"
             id="productImage"
@@ -121,26 +160,7 @@
             class="form-control"
           /> -->
         </div>
-      </div>
-
-      <!-- Row 5: Category, Brand -->
-      <div class="row mb-3">
-        <div class="col-md-3">
-          <label for="category">Category</label>
-          <input
-            id="category"
-            pInputText
-            formControlName="category"
-            class="w-100"
-          />
-        </div>
-
-        <div class="col-md-3">
-          <label for="brand">Brand</label>
-          <input id="brand" pInputText formControlName="brand" class="w-100" />
-        </div>
-
-        <div class="col-md-6">
+        <div class="col-md-5">
           <label for="size">Size</label>
 
           <p-scrollpanel [style]="{ width: '100%', height: '200px' }">
@@ -148,40 +168,48 @@
               <div
                 *ngFor="let sizeCtrl of sizes.controls; let i = index"
                 [formGroupName]="i"
-                class="row mb-2"
+                class="row mb-2 justify-content-start"
               >
-                <div class="col-md-3">
-                  <input
-                    pInputText
-                    placeholder="Size (e.g. M, L, XL)"
-                    formControlName="size"
-                    class="w-100"
-                  />
+                <div class="col-md-8 g-1 p-0">
+                  <div class="row">
+                    <div class="col-6">
+                      <p-select
+                        formControlName="size"
+                        [options]="availableSizes"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Size"
+                        class="rounded-box formcontrol-sm"
+                      ></p-select>
+                    </div>
+                    <div class="col-6">
+                      <input
+                        type="number"
+                        pInputText
+                        placeholder="Qty"
+                        formControlName="quantity"
+                        class="rounded-box formcontrol-sm w-100"
+                      />
+                    </div>
+                  </div>
+                  <!-- Size Dropdown -->
                 </div>
-                <div class="col-md-3">
-                  <input
-                    type="number"
-                    pInputText
-                    placeholder="Quantity"
-                    formControlName="quantity"
-                    class="w-100"
-                  />
-                </div>
-                <div class="col-md-6 d-flex align-items-between">
-                  <button
-                    pButton
-                    label="Add"
+
+                <div class="col-md-4 g-1 p-0">
+                  <p-button
+                    icon="pi pi-plus"
+                    severity="success"
+                    [rounded]="true"
+                    [outlined]="true"
                     (click)="addSize()"
-                    type="button"
-                    class="p-button-success col-6"
-                  ></button>
-                  <button
-                    pButton
+                  />
+                  <p-button
+                    icon="pi pi-trash"
+                    severity="danger"
+                    [rounded]="true"
+                    [outlined]="true"
                     (click)="removeSize(i)"
-                    class="p-button-danger col-6"
-                    type="button"
-                    label="Remove"
-                  ></button>
+                  />
                 </div>
               </div>
             </div>
